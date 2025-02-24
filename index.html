@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Improving Netflix's Genre Dropdown</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- 🟢 Header & Sticky Navigation -->
+    <header>
+        <h1>Improving Netflix's Genre Dropdown</h1>
+        <p id="subtitle">A Usability and Accessibility Case Study</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#background">Background</a></li>
+            <li><a href="#popular-examples">Popular Examples</a></li>
+            <li><a href="#input-analysis">Input Analysis</a></li>
+            <li><a href="#output-analysis">Output Analysis</a></li>
+            <li><a href="#state-models">State Models</a></li>
+            <li><a href="#component-redesign">Component Redesign</a></li>
+            <li><a href="#reflection">Reflection</a></li>
+        </ul>
+    </nav>
+
+    <!-- 🟢 Background Section -->
+    <section id="background">
+        <h2>Background: Dropdown Menus</h2>
+
+        <figure class="centered-figure">
+            <img src="images/dropdown-ex.gif" width="500" class="centered-img"
+                alt="An animated example of a dropdown menu navigating sports categories, with options like 'Football,' 'Basketball,' and 'Tennis' being highlighted and selected." />
+            <figcaption>Dropdown menu navigating different sports categories.</figcaption>
+        </figure>
+
+
+        <p>Dropdown menus are a common UI element used to present different choices to a user in a compact space,
+            Although they are used widely
+            across the web, their usability and accessibility can vary significantly. Some are smooth and intuitive, while others feel like a 
+            puzzle you never signed up for. Netflix’s genre dropdown, for example, disables itself after selection, making it frustrating for users who want to switch categories. 
+            In this case study, we will
+            compare different instances of dropdown
+            menus across applications, analyzing their input and output features. Then, we will examine Netflix's genre
+            dropdown menu more closely
+            by creating state diagrams that model user interaction. Finally, based on our analysis, we will propose a
+            redesign of Netflix's genre dropdown menu to
+            enhance its usability and accessibility.
+        </p>
+
+    </section>
+
+    <!-- 🟢 Popular Examples Section -->
+    <section id="popular-examples">
+        <h2>Popular Examples of Dropdowns</h2>
+        <p>To better understand how dropdowns work, let's take a look at dropdown menus across three different
+            applications that you may
+            have come across.
+        </p>
+
+        <div id="netflix-analysis">
+            <h3>Netflix (Genre Dropdown)</h2>
+                <div class="app-container">
+                    <div class="app-info">
+                        <p>Netflix’s genre dropdown menu enables users to browse content categories. Below are images of
+                            its web
+                            and mobile versions.</p>
+                    </div>
+                    <div class="app-images">
+                        <div class="image-wrapper">
+                            <h3>Web Version</h3>
+                            <img src="images/netflix-desktop.jpg" alt="Netflix Genre Dropdown Web">
+                        </div>
+                        <div class="image-wrapper">
+                            <h3>Mobile Version</h3>
+                            <img src="images/netflix-phone.jpg" alt="Netflix Genre Dropdown Mobile">
+                        </div>
+                    </div>
+                </div>
+        </div>
+
+        <div id="apple-music-analysis">
+            <h3>Apple Music (Three-Bar Menu)</h2>
+                <div class="app-container">
+                    <div class="app-info">
+                        <p>Apple Music’s three-bar dropdown menu is used for accessing song options. Here’s a comparison
+                            of its web
+                            and mobile versions.</p>
+                    </div>
+                    <div class="app-images">
+                        <div class="image-wrapper">
+                            <h3>Web Version</h3>
+                            <img src="images/apple-music-desktop.jpg" alt="Apple Music Three-Bar Menu Web">
+                        </div>
+                        <div class="image-wrapper">
+                            <h3>Mobile Version</h3>
+                            <img src="images/apple-music-mobile.jpeg" alt="Apple Music Three-Bar Menu Mobile">
+                        </div>
+                    </div>
+                </div>
+        </div>
+
+        <div id="word-analysis">
+            <h3>Microsoft Word (Font Menu)</h2>
+                <div class="app-container">
+                    <div class="app-info">
+                        <p>Microsoft Word’s font dropdown menu is used for choosing the text's font. Below is a
+                            comparison of its
+                            desktop and mobile versions.</p>
+                    </div>
+                    <div class="app-images">
+                        <div class="image-wrapper">
+                            <h3>Desktop Version</h3>
+                            <img src="images/word-desktop.jpg" alt="Microsoft Word Font Menu Desktop">
+                        </div>
+                        <div class="image-wrapper">
+                            <h3>Mobile Version</h3>
+                            <img src="images/word-iphone.jpg" alt="Microsoft Word Font Menu Mobile">
+                        </div>
+                    </div>
+                </div>
+        </div>
+
+    </section>
+    <!-- 🟢 Input Analysis Section -->
+    <section id="input-analysis">
+        <h2>Input Methods: How Users Interact with Dropdowns</h2>
+        <p>Dropdown menus components behave differently across applications based on input method.
+            This section summarizes how each of the three application's respond to mouse/touchpad, keyboard, and touch
+            inputs. Surprisingly,
+            I noticed that Netflix had limited keyboard functionality without a screen reader. Furthermore, its desktop
+            version's dropdown menu
+            lacked a clear "X" button to close it, unlike its mobile version's.
+        </p>
+
+        <div class="input-analysis">
+            <table class="input-table">
+                <tr>
+                    <th class="red-text"></th>
+                    <th class="red-text">Mouse/Touchpad</th>
+                    <th class="red-text">Keyboard</th>
+                    <th class="red-text">Touch</th>
+                </tr>
+
+                <tr>
+                    <td class="red-text"><strong>Netflix (Genre Dropdown)</strong></td>
+                    <td>Click the Genres button to open the dropdown. <br> Scroll and click to select a genre. <br> No
+                        clear “X” button to close—clicking outside dismisses it.</td>
+                    <td>Tab navigates to the dropdown, Enter opens it. <br> Arrow keys navigate, Enter selects, Esc
+                        closes. <br> Limited keyboard support without screen reader.</td>
+                    <td>Tap to open "All Categories" dropdown. <br> Scroll and tap to select a genre. <br> Click "X" to
+                        close (not available on desktop).</td>
+                </tr>
+
+                <tr>
+                    <td class="red-text"><strong>Apple Music (Three-Bar Menu)</strong></td>
+                    <td>Click the three-bar menu to open. <br> Options appear as an overlay (e.g., "Add to Playlist").
+                        <br> Click outside to close.
+                    </td>
+                    <td>Tab navigates to the three-bar menu. <br> Spacebar/Arrow keys highlight options. <br> Esc closes
+                        the menu. <br> Better keyboard support than Netflix.</td>
+                    <td>Tap three-bar menu to expand options. <br> Tap a selection (e.g., "Add to Playlist"). <br> Tap
+                        outside to exit.</td>
+                </tr>
+
+                <tr>
+                    <td class="red-text"><strong>Microsoft Word (Font Menu)</strong></td>
+                    <td>Click to open the font dropdown. <br> Scroll to browse fonts, click to select. <br> Click
+                        outside to close.</td>
+                    <td>Tab navigates through the Ribbon toolbar. <br> Enter selects font menu, Arrow keys navigate.
+                        <br> Esc closes the menu. <br> Best keyboard support of the three (Autocomplete allows typing
+                        font names).**
+                    </td>
+                    <td>On iPhone app, highlight text to activate the font menu. <br> Scroll to browse fonts (no text
+                        input). <br> Tap to select, tap outside to close.</td>
+                </tr>
+            </table>
+        </div>
+
+
+
+
+    </section>
+
+    <!-- 🟢 Output Analysis Section -->
+    <section id="output-analysis">
+        <h2>Output Feedback: State Change Feedback</h2>
+        <p>
+            Dropdown menus provide visual, textual, and screen reader feedback (VoicOover on mac) to help users
+            understand
+            their current state. This section summarizes how each of the three applications communicates state changes
+            through visual cues, text updates,
+            and screen reader focus order. For Netflix, note that a static textbox (not available for interaction) of
+            the selected genre replaced the dropdown menu once a genre was selected,
+            effectively disabling it. I found this behavior strange, as it limited the user's ability to easily change
+            their selection.
+        </p>
+
+        <div class="output-analysis">
+            <table class="output-table">
+                <tr>
+                    <th class="red-text"></th>
+                    <th class="red-text">Visual Feedback</th>
+                    <th class="red-text">Textual Feedback</th>
+                    <th class="red-text">Screen Reader/Focus Order</th>
+                </tr>
+
+                <tr>
+                    <td class="red-text"><strong>Netflix (Genre Dropdown)</strong></td>
+                    <td>Dropdown button highlights on hover. <br> Dropdown expands on click, forming a rectangle. <br>
+                        UI updates based on selection (e.g., new horror content displayed below).</td>
+                    <td>Hovered genre name is underlined. <br> Selected genre replaces the dropdown menu.</td>
+                    <td>Announces genre button. <br> Announces each linked genre category. <br> Logical focus order:
+                        Genre button → Genres listed sequentially (top to bottom, left to right).</td>
+                </tr>
+
+                <tr>
+                    <td class="red-text"><strong>Apple Music (Three-Bar Menu)</strong></td>
+                    <td>Selected option is highlighted on hover/click (e.g., play next song highlighted). <br> Three-bar
+                        menu highlighted briefly on click.</td>
+                    <td>Selected option (e.g., "Add to Playlist") updates UI accordingly. <br> Some options provide
+                        confirmation text (e.g., "Added to Playlist").</td>
+                    <td>Announces each option out loud, includes number of options. <br> Logical focus order: More
+                        Button → Each option listed sequentially. <br> Conveniently lists submenus too (e.g., share with
+                        multiple sharing options).</td>
+                </tr>
+
+                <tr>
+                    <td class="red-text"><strong>Microsoft Word (Font Menu)</strong></td>
+                    <td>Dropdown arrow highlighted on click while menu is active. <br> Hovered fonts highlight as the
+                        cursor moves.</td>
+                    <td>Selected font name appears in the selection box. <br> Font name is highlighted in the text box
+                        after selection.</td>
+                    <td>Reads each font name aloud when hovered. <br> Logical focus order: Toolbar → Dropdown → Fonts
+                        listed alphabetically. <br> Submenus announced for fonts with variations (e.g., "Arial → Arial
+                        Bold").</td>
+                </tr>
+            </table>
+        </div>
+
+    </section>
+
+    <!-- 🟢 State Models Section -->
+    <section id="state-models">
+        <h2>State Models</h2>
+        <p>We now use the following state diagrams to examine our Netflix genre dropdown menu component more closely.
+            Let's first
+            model the dropdown's state for mouse and keyboard users as it is currently implemented i.e, unrevised.
+        </p>
+        <div class="image-container">
+            <img src="images/unrevised.png" alt="Unrevised Netflix dropdown state model for mouse/keyboard users">
+        </div>
+
+        <p>As seen above, we notice some issues with the current state model. Notice how it isn't possible to navigate
+            throughthe dropdown menu using the keyboard alone.
+            It is also inconvenient how the dropdown menu becomes disabled once a genre is selected, which strains the
+            user's ability to change their selection efficiently.
+            To see what type of interactions the model above is capturing, watch the video below of a user interacting
+            with the Netflix genre dropdown menu.
+        </p>
+
+        <div class="image-container">
+            <img src="images/netflix-gif.gif" alt="Animated Netflix dropdown interaction">
+        </div>
+
+
+        <p> Let's now model the revised state for mouse and keyboard users. This revised model will address the
+            gaps we identified in the previous model. Importantly, this model allows users to reopen the dropdown to
+            change
+            their selection after one has been made. Also notice how the revised model allows for keyboard navigation
+            and includes a
+            clear "X" button to close the dropdown.
+        </p>
+        <div class="image-container">
+            <img src="images/revised.png" alt="Revised Netflix dropdown state model for mouse/keyboard users">
+        </div>
+
+
+
+
+    </section>
+
+
+    <!-- 🟢 Component Redesign Section -->
+    <section id="component-redesign">
+        <h2>Redesigning Netflix’s Genre Dropdown</h2>
+        <p>To address the issues we encountered above, we propose the following redesign for Netflix's genre dropdown menu.
+            We've created a mock design for the initial dropdown state. We've also
+            added a mock design for the selected genre state, which includes a "Change Genre" button to reopen the dropdown.
+            Each design
+            includes annotations to explain the changes made.
+    </p>
+
+        <div class="image-container">
+            <img src="images/initial-state.png" alt="   To address the issues we encountered above, we propose the following redesign for Netflix's genre dropdown menu.
+            We've created a mock design for the initial dropdown state. We've also
+            added a mock design for the selected genre state, which includes a 'Change Genre' button to reopen the dropdown. Each design
+            includes annotations to explain the changes made.">
+        </div>
+
+        <div class="image-container">
+            <img src="images/menu-hovering.png" alt="Redesigned Netflix genre dropdown in its selected genre state. 
+            The dropdown is collapsed, and a 'Change Genre' button is present to reopen the menu. Annotations explain usability improvements,
+             such as clearer affordances and improved accessibility features">
+        </div>
+    </section>
+
+    <!-- 🟢 Reflection Section -->
+    <section id="reflection">
+        <h2>Reflection</h2>
+        <p>Based on  <a href="https://www.youtube.com/watch?v=-iccWRhKZa8&t=185s" target="_blank">Kat Holmes’ talk</a> on Inclusive Design, we will now reflect on this case study and the impacts of our 
+            proposed design choices. In terms of accessibility and usability, both Microsoft Word's font menu and Apple Music's 
+            three-bar menu fully support keyboard navigation and provide hover highlights for clear visual feedback. A major mismatch
+             I noticed is that the original Netflix’s dropdown’s lack of keyboard support, implicitly assuming interactions are mouse-based. 
+             Another mismatch manifests when the dropdown becomes inactive after selection, restricting users who may need to switch genres 
+             frequently or motor impaired users who may struggle to efficiently reopen the menu.  Furthermore, Netflix lacks an obvious dropdown 
+             closing or collapsing affordance. In contrast, Microsoft Word’s dropdown menu’s autocomplete feature improves accessibility, 
+             allowing users with limited dexterity to type instead of scrolling. Our redesign addresses these by ensuring continuous 
+             interactivity, clear focus states, and improved keyboard support. I added keyboard functionality (refer to state models) and an 
+             "X" button (refer to component redesign) to improve usability, especially for assistive technology users. While mouse and mobile 
+             users are often prioritized in design, keyboard and screen reader users are less prioritized and at times even neglected. This project highlights how 
+             designing with accessibility in mind benefits all users, creating a superior experience for everyone.
+
+        </p>
+    </section>
+
+    <!-- 🟢 Footer -->
+    <footer>
+        <p>© 2025 My GitHub Page. All rights reserved.
+        </p>
+
+    </footer>
+
+</body>
+
+</html>
